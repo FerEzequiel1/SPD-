@@ -1,4 +1,4 @@
-*INTEGRANTES
+#INTEGRANTES
 
 Barbizan	Franco
 García	Angeles Belen 
@@ -7,4 +7,5 @@ Costantini	Nicolas
 Espinoza	Fernando
 Fernández	Agustín
 
-*proyecto: Semaforo doble
+#Proyecto: Semaforo doble con pitido
+
