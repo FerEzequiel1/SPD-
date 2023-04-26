@@ -1,0 +1,114 @@
+// C++ code
+//Espinoza Fernando
+//Div B
+/*
+ENUNCIADO DEL EJERCICIO:1
+
+1 - LA PRIMER  ENTREGA SERÁ LO SIGUIENTE, 
+1- El semáforo tiene que tener 2 leds de cada color como mínimo,
+en caso de que uno se  rompa. 
+2- Tiene que implementar los tiempos correctos como se detallan 
+a continuación. 
+3- El verde dura 5 segundos. 
+4- El amarillo dura 3 segundos. 
+5- Rojo dura 5 segundos. 
+6- Tiene que tener señalización para personas no videntes 
+como se detalla a continuación. (Buzzer o piezo)
+7- Durante el rojo: Tiene que sonar 2 vez por segundo 
+en un tono FUERTE.
+
+*/
+//Se define los pines que seran usados 
+#define led_rojo_uno 13
+#define led_rojo_dos 10
+#define led_amarillo_uno 9
+#define led_amarillo_dos 7
+#define led_verde_uno 4
+#define led_verde_dos 2
+#define buzzer 3 
+
+//Se define las variables de los distintos tiempos a utilizar
+int tiempo_verde_rojo = 5000;
+int tiempo_amarillo = 3000;
+
+//Se inicializan los pines
+
+void setup()
+{
+  pinMode(led_rojo_uno, OUTPUT);
+  pinMode(led_rojo_dos, OUTPUT);
+  pinMode(led_amarillo_uno, OUTPUT);
+  pinMode(led_amarillo_dos, OUTPUT);
+  pinMode(led_verde_uno, OUTPUT);
+  pinMode(led_verde_dos, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+  Serial.begin(9600);
+}
+
+//Se introduce las variables para hacer el juego de luces
+//con sus descripción en el serial
+
+void loop()
+{
+  Serial.println("se prenden las luces rojas");
+  Serial.println("Se enciende el buzzer");
+  prender_apagar_semaforo(led_rojo_uno,led_rojo_dos,tiempo_verde_rojo);
+  Serial.println("se prenden las luces amarillas");
+  prender_apagar_semaforo(led_amarillo_uno,led_amarillo_dos,tiempo_amarillo);
+  Serial.println("se prenden las luces verdes");
+  prender_apagar_semaforo(led_verde_uno,led_verde_dos,tiempo_verde_rojo);
+  Serial.println("se prenden las luces amarillas");
+  prender_apagar_semaforo(led_amarillo_uno,led_amarillo_dos,tiempo_amarillo);
+}
+
+//Se realiza la función de prender,que recibe como parametros
+//los luces que queremos prender
+
+void prender_luz(int led_uno, int led_dos, int tiempo)
+{
+  digitalWrite(led_uno, HIGH);
+  digitalWrite(led_dos, HIGH);
+  if(led_uno == led_rojo_uno)
+  {
+	prender_buzzer();
+  } else
+  {  
+  delay(tiempo);
+  }  
+}
+
+//Se realiza la función de apagar,que recibe como parametros
+//los luces que queremos apagar  
+
+void apagar_luz(int led_uno, int led_dos)
+{
+  digitalWrite(led_uno, LOW);
+  digitalWrite(led_dos, LOW);
+}
+
+
+//Se reliza la funcion de repeticion del buzzer mediante un 
+//siclo for para que suene mientras las luces rojas esten
+//prendidas
+
+
+void prender_buzzer()
+{
+    for(int i = 0; i<10;i++)
+    {
+  	 tone(buzzer, 10, 1000);
+  	 delay(500);
+  	 digitalWrite(buzzer,LOW);
+ 	}
+}
+
+//Se hace una funcion donde se junten tanto la funcion de prender
+// y apagar las luces. Recibe como parametros las luces que
+//queremos prender.
+
+void prender_apagar_semaforo(int led_uno, int led_dos, int tiempo)
+{
+  prender_luz(led_uno, led_dos, tiempo);
+  apagar_luz(led_uno, led_dos);
+}
+
